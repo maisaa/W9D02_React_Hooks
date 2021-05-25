@@ -28,6 +28,10 @@ function App() {
     setBody(e.target.value);
   };
 
+  const addToPosts =(e) => {
+    setPosts([...posts, {userId, id, title, body}]);
+  }
+
 
   return (
     <div className="App">
@@ -41,7 +45,7 @@ function App() {
 
       {posts.map((ele, i) => <p key={i}> {ele.title}({i}):{ele.body} </p>)}
 
-      <button>add post</button>
+      <button onClick={addToPosts}>add post</button>
 
 
       <div>
