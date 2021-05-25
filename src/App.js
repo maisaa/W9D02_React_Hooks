@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
@@ -12,7 +12,17 @@ function App() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-
+  useEffect(() =>{
+    axios
+    .get(`https://jsonplaceholder.typicode.com/users`)
+    .then((response)=>{
+      console.log('DATA: ', response.data);
+      setPosts([...posts,... response.data]);
+    })
+    .catch((err) => {
+      console.log('ERR:.......',err);
+    });
+  },[]);
 
 
   const userIdChange = (e) => {
@@ -29,15 +39,6 @@ function App() {
   };
 
   const addToPosts =(e) => {
-    axios
-    .get(`https://jsonplaceholder.typicode.com/users`)
-    .then((response)=>{
-      console.log('DATA: ', response.data);
-      setPosts([...posts, response.data]);
-    })
-    .catch((err) => {
-      console.log('ERR:.......',err);
-    });
     setPosts([...posts, {userId, id, title, body}]);
   }
 
@@ -52,9 +53,9 @@ function App() {
       {/* {posts.map((ele,i) => <p key={i}> {ele[i].title} </p>)} */}
 
 
-      {posts.map((ele, i) => <p key={i}> {ele.title}({i}):{ele.body} </p>)}
-
+      
       <button onClick={addToPosts}>add post</button>
+      {posts.map((ele, i) => <p key={i}> {ele.title}({i}):{ele.body}{ele.name} </p>)}
 
 
       <div>
