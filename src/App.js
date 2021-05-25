@@ -1,6 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-
+import axios from 'axios';
 
 function App() {
 
@@ -29,6 +29,15 @@ function App() {
   };
 
   const addToPosts =(e) => {
+    axios
+    .get(`https://jsonplaceholder.typicode.com/users`)
+    .then((response)=>{
+      console.log('DATA: ', response.data);
+      setPosts([...posts, response.data]);
+    })
+    .catch((err) => {
+      console.log('ERR:.......',err);
+    });
     setPosts([...posts, {userId, id, title, body}]);
   }
 
